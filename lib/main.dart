@@ -93,7 +93,7 @@ class ToggleWorkingState extends State<ToggleWorking> {
                   print(6);
                 },
               ),
-              MyButton()
+              MyButton(buttonText: "Cello",)
             ],
           ),
         ),
@@ -102,19 +102,17 @@ class ToggleWorkingState extends State<ToggleWorking> {
   }
 }
 
-class MyButton extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return MyButtonState();
-  }
-}
-
-class MyButtonState extends State<MyButton> {
-  
+class MyButton extends StatelessWidget {
+  MyButton({this.buttonText = "Hello"});
+  final String buttonText;
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.red,
-        padding: const EdgeInsets.all(10), child: Text("Click Me", style: TextStyle(color: Colors.white),));
+        color: Colors.red,
+        padding: const EdgeInsets.all(10),
+        child: Text(
+          buttonText,
+          style: TextStyle(color: Colors.white),
+        ));
   }
 }
