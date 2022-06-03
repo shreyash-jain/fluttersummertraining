@@ -68,7 +68,7 @@ class ToggleWorkingState extends State<ToggleWorking> {
       backgroundColor: color,
       body: SafeArea(
         child: Center(
-          child: Row(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -93,10 +93,28 @@ class ToggleWorkingState extends State<ToggleWorking> {
                   print(6);
                 },
               ),
+              MyButton()
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+class MyButton extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return MyButtonState();
+  }
+}
+
+class MyButtonState extends State<MyButton> {
+  
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.red,
+        padding: const EdgeInsets.all(10), child: Text("Click Me", style: TextStyle(color: Colors.white),));
   }
 }
