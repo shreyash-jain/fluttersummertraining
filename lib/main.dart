@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ToggleWorking(),
+      home: Toggle(),
     );
   }
 }
@@ -50,69 +50,5 @@ class Toggle extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class ToggleWorking extends StatefulWidget {
-  ToggleWorking({Key? key}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => ToggleWorkingState();
-}
-
-class ToggleWorkingState extends State<ToggleWorking> {
-  Color color = Colors.black;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: color,
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                child: Text("Red"),
-                onPressed: () {
-                  print(5);
-                  setState(() {
-                    color = Colors.red;
-                  });
-                  print(color);
-                },
-              ),
-              SizedBox(width: 20),
-              ElevatedButton(
-                child: Text("Black"),
-                onPressed: () {
-                  setState(() {
-                    color = Colors.black;
-                  });
-
-                  print(6);
-                },
-              ),
-              MyButton(buttonText: "Cello",)
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class MyButton extends StatelessWidget {
-  MyButton({this.buttonText = "Hello"});
-  final String buttonText;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Colors.red,
-        padding: const EdgeInsets.all(10),
-        child: Text(
-          buttonText,
-          style: TextStyle(color: Colors.white),
-        ));
   }
 }
