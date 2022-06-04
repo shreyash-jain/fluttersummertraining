@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Toggle(),
+      home: ToggleWorking(),
     );
   }
 }
@@ -31,7 +31,7 @@ class Toggle extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ElevatedButton(
-                child: Text("Red1"),
+                child: Text("Red"),
                 onPressed: () {
                   print(5);
                   color = Colors.red;
@@ -40,11 +40,88 @@ class Toggle extends StatelessWidget {
               ),
               SizedBox(width: 20),
               ElevatedButton(
-                child: Text("Black2"),
+                child: Text("Black"),
                 onPressed: () {
                   print(6);
                 },
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ToggleWorking extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return ToggleWorkingState();
+  }
+}
+
+class ToggleWorkingState extends State<ToggleWorking> {
+  Color color = Colors.white;
+  int counterValue = 0;
+  TextEditingController nameController = TextEditingController(text: "no data");
+
+  getEmail() {
+    return "email@gmail.com";
+  }
+
+  @override
+  void initState() {
+    
+    nameController.text = getEmail();
+    // do some computaion
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: color,
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                child: Text("Add"),
+                onPressed: () {
+                  setState(() {});
+
+                  counterValue = counterValue + 1;
+
+                  print(counterValue);
+                },
+              ),
+              SizedBox(width: 20),
+              Text(counterValue.toString()),
+              SizedBox(width: 20),
+              ElevatedButton(
+                child: Text("Sub"),
+                onPressed: () {
+                  counterValue = counterValue - 1;
+                  setState(() {});
+                  print(counterValue);
+                },
+              ),
+              SizedBox(width: 20),
+              Text("Please type your name"),
+              SizedBox(width: 20),
+              TextField(
+                controller: nameController,
+              ),
+              if (counterValue < 10)
+                ElevatedButton(
+                  child: Text("I am here"),
+                  onPressed: () {
+                    setState(() {});
+                    print(nameController.text);
+                  },
+                ),
             ],
           ),
         ),
