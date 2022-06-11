@@ -11,7 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: FirstRoute(),
+       initialRoute: '/',
+      routes: {
+        '/': (context) => const FirstRoute(),
+        '/second': (context) => const SecondRoute(),
+      },
     );
   }
 }
@@ -29,9 +33,9 @@ class FirstRoute extends StatelessWidget {
         child: ElevatedButton(
           child: const Text('Page 1'),
           onPressed: () {
-            Navigator.push(
+            Navigator.pushNamed(
               context,
-              MaterialPageRoute(builder: (context) => const SecondRoute()),
+             '/second',
             );
           },
         ),
