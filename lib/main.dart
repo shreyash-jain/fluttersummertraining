@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-       initialRoute: '/',
+      initialRoute: '/',
       routes: {
         '/': (context) => const FirstRoute(),
         '/second': (context) => const SecondRoute(),
@@ -35,7 +35,7 @@ class FirstRoute extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(
               context,
-             '/second',
+              '/second',
             );
           },
         ),
@@ -58,7 +58,7 @@ class SecondRoute extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ThirdRoute()),
+              MaterialPageRoute(builder: (context) => const ThirdRoute('name')),
             );
           },
           child: const Text('Page 2'),
@@ -68,9 +68,9 @@ class SecondRoute extends StatelessWidget {
   }
 }
 
-
 class ThirdRoute extends StatelessWidget {
-  const ThirdRoute();
+  const ThirdRoute(this.customName);
+  final String customName ;
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +84,7 @@ class ThirdRoute extends StatelessWidget {
             Navigator.popUntil(
                 context, (Route<dynamic> route) => route.isFirst);
           },
-          child: const Text('Page 3'),
+          child: Text(customName),
         ),
       ),
     );
