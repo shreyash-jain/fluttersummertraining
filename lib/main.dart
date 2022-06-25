@@ -23,87 +23,114 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  String whatIamDoing = "Cooking breakfast";
+  String initailButtonValue = "Coding";
+  Map<int, String> bbmap = {};
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: FutureBuilder(
-            future: getAllBoodBanks(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
-              }
+        body: Center(
+      child: FutureBuilder(
+        future: getBloodBanksFromCloud(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          }
 
-              if (snapshot.hasData) {
-                return Center(
-                  child: ListView(children: [
-                    ElevatedButton(
-                      child: Text(whatIamDoing),
-                      onPressed: doChores,
-                    ),
-                    ...drawCards(snapshot.data as List<String>)
-                  ]),
-                );
-              }
+          if (snapshot.hasData) {
+            return ListView(
+              children: [...convertToWidget(snapshot.data as List<String>)],
+            );
+          }
 
-              return Container();
-            }));
+          if (snapshot.hasError) return Text(snapshot.error.toString());
+
+          return Container();
+        },
+      ),
+    ));
   }
 
-  void myFunction() {}
+  void makeBbMap() {
+    Map<int, String> bbmap = {};
+    final bb = <int, String>{1: "Red Cross", 2: "Blue Cross"};
+    bbmap.addAll(bb);
+  }
 
-  List<Widget> drawCards(List<String> bloodBanks) {
+  List<Widget> convertToWidget(List<String> bloodBanks) {
     List<Widget> myWidgets = [];
     for (int i = 0; i < bloodBanks.length; i++) {
-      myWidgets.add(Text(bloodBanks[i]));
+      myWidgets.add(myCustomWidget(bloodBanks[i]));
     }
     return myWidgets;
   }
 
-  Future<List<String>> getAllBoodBanks() async {
-    var time = await Future.delayed(Duration(seconds: 2));
-    return [
-      "Red Cross Blood Bank",
-      "Rajiv Gandi Bloof Bank",
-      "Modi ji Blood Bank"
-    ];
+  Widget myCustomWidget(String text) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(child: Text(text)),
+    );
   }
 
-  void doChores() {
-    print("Lets start");
+  Future<List<String>> getBloodBanksFromCloud() async {
+    // faking bringing data from cloud
+    var time = await Future.delayed(Duration(seconds: 2));
+    Random random = Random();
+    int randomNumber = random.nextInt(3);
 
-    //Statement 2
-    String result = whatIamDoing;
+    if (randomNumber == 0)
+      return [
+        "Red Cross Blood Bank",
+        "Rajiv Gandi Blood Bank",
+        "Modi ji Blood Bank"
+      ];
+    else if (randomNumber == 1)
+      throw Exception("Network exception");
+    else
+      throw Exception("Server Exception");
+  }
+}
 
-    //Statement 3
-    var myFuture = Future.delayed(Duration(seconds: 3), () {
-      Random rand = Random();
-      int res = rand.nextInt(3);
-      if (res == 0)
-        throw Exception();
-      else if (res == 1)
-        result = "Vegetables not found";
-      else
-        result = "Done cooking";
-      return "Result: $result";
-    });
+List<BloodBank> getAllBloodBanks() {
+  BloodBank modiJiBloodBank = BloodBank( name: "Modi Ji", id : 3);
 
-    setState(() {
-      whatIamDoing = "teaching you guys";
-    });
+  BloodBank rahulBloodBank = BloodBank(name: "Rahul", id: 2);
 
-    //Statement 4
-    myFuture.then((result) {
-      setState(() {
-        whatIamDoing = "Done cooking";
-      });
-    });
 
-    //Statement 5
-    myFuture.catchError((error) {
-      setState(() {
-        whatIamDoing = "Oh ! gas not available";
-      });
-    });
+  return [modiJiBloodBank, rahulBloodBank];
+}
+
+class BloodBank {
+  int? id;
+  String? name;
+  String? address;
+  int? lat;
+  int? long;
+  double? minEmergencyBlood;
+  //"B+", "B-", "O+", "AB-"
+  Map<String, double>? currentBloodStatus;
+
+  BloodBank(
+      {required this.id,
+      required this.name,
+      this.address,
+      this.lat,
+      this.long,
+      this.minEmergencyBlood});
+
+  bool donateBlood(String bloodGroup, double quantity) {
+    return true;
+  }
+
+  bool acceptBlood(String bloodGroup, double quantity) {
+    return true;
+  }
+
+  String testBloodGroup(String patientReport) {
+    return "AB-";
+  }
+
+  bool validateBlood() {
+    return true;
   }
 }
